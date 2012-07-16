@@ -15,6 +15,7 @@ module Codebreaker
       marker = Marker.new(@secret, guess)
       @output.puts '+' * marker.exact_match_count +
                    '-' * marker.number_match_count
+      @output.puts "Congratulations! You're Winner!" if guess == @secret
     end
 
   end

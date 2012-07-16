@@ -23,6 +23,12 @@ module Codebreaker
         output.should_receive(:puts).with('++++')
         game.guess('1234')
       end
+
+      it "sends a wining message" do
+        game.start('1234')
+        output.should_receive(:puts).with("Congratulations! You're Winner!")
+        game.guess('1234')
+      end
     end
 
   end
