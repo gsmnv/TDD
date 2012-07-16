@@ -2,8 +2,25 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'codebreaker'
 
-game = Codebreaker::Game.new(STDOUT)
-game.start('1234')
-while guess = gets.chomp
-  game.guess(guess)
+def generate_secret_code
+  options = %w[1 2 3 4 5 6]
+  (1..4).map { options.delete_at(rand(options.length)) }.join
+end
+
+loop do
+  secret = generate_secret_code
+  game = Codebreaker::Game.new(STDOUT)
+  game.start(secret)
+
+  while guess = gets.chomp
+    if guess == 'g'
+      puts "\n***\nThe secret code was: #{secret}\n"
+      exit
+    end
+    game.guess(guess)
+    break if game.win?
+  end
+
+  break if gets.chomp == 'n'
+
 end

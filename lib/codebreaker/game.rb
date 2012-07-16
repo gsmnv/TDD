@@ -6,8 +6,9 @@ module Codebreaker
     end
 
     def start(secret)
+      @winner = false
       @secret = secret
-      @output.puts 'Welcome to Codebreaker!'
+      @output.puts "Welcome to Codebreaker! [Enter 'g' to give up]"
       @output.puts 'Enter guess:'
     end
 
@@ -15,8 +16,19 @@ module Codebreaker
       marker = Marker.new(@secret, guess)
       @output.puts '+' * marker.exact_match_count +
                    '-' * marker.number_match_count
-      @output.puts "Congratulations! You're Winner!" if guess == @secret
+      win if guess == @secret
     end
 
+    def win?
+      @winner
+    end
+
+    private
+
+    def win
+      @winner = true
+      @output.puts "Congratulations! You're Winner!"
+      @output.puts "Another round? [y/n]"
+    end
   end
 end

@@ -7,7 +7,7 @@ module Codebreaker
 
     describe "#start" do
       it "sends a welcome messgae" do
-        output.should_receive(:puts).with('Welcome to Codebreaker!')
+        output.should_receive(:puts).with("Welcome to Codebreaker! [Enter 'g' to give up]")
         game.start('1234')
       end
 
@@ -24,12 +24,19 @@ module Codebreaker
         game.guess('1234')
       end
 
-      it "sends a wining message" do
-        game.start('1234')
-        output.should_receive(:puts).with("Congratulations! You're Winner!")
-        game.guess('1234')
+      context "wining condition" do
+        it "sends a wining message" do
+          game.start('1234')
+          output.should_receive(:puts).with("Congratulations! You're Winner!")
+          game.guess('1234')
+        end
+
+        it "sends a request for next round" do
+          game.start('1234')
+          output.should_receive(:puts).with("Another round? [y/n]")
+          game.guess('1234')
+        end
       end
     end
-
   end
 end
